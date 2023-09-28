@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "embedding-api"
+version = "0.1.0"
+description = "An API to calculate vector embedding of sentences"
+authors = ["Zahra Rezapour <rezapour92z@gmail.com>"]
+
+[tool.poetry.dependencies]
+# --- API dependencies --- #
+python = "~3.10"
+fastapi = "^0.99.0"
+uvicorn = "^0.22.0"
+pydantic = "^1.9.0"
+gunicorn = "^20.1.0"
+
+# --- Model-specific dependencies --- #
+loguru = "^0.7.0"
+scikit-learn = "^1.2.2"
+tensorflow = {version = "^2.13", platform = "linux"}
+tensorflow-macos = {version = "^2.13", platform = "darwin"}
+tensorflow-hub = "^0.14.0"
+
+[tool.poetry.dev-dependencies]
+pytest = { version = "^7.0.0" }
+pytest-asyncio = "^0.18.3"
+pytest-httpx = "^0.21.0"
+pytest-cov = "^3.0.0"
+starlette = "0.27.0"
+poethepoet = "^0.18.0"
+pytest-html = "^4.0.0"
+
+[tool.poe.tasks]
+api = "python src/main.py"
+pytest = "pytest -c ./pytest-config.ini --cache-clear --junitxml=htmlcov/pytest_junit.xml --html=htmlcov/pytest.html --self-contained-html --cov-report=html:htmlcov/coverage_html --cov-report=xml:htmlcov/coverage.xml"
+
+generate-docs = "pdoc --html src/api_docs -o docs/ --force"
+build-wheel = "poetry build --format wheel"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "public-pypi"
+url = "https://pypi.org/simple/"

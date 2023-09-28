@@ -1,0 +1,10 @@
+**/.idea/
+**/__pycache__/
+**/.venv/
+**/.python-version
+**/.coverage
+**/.pytest_cache/
+**/tf_cache
+myapp.log
+.DS_Store
+htmlcov/
